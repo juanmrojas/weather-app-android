@@ -1,0 +1,86 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+}
+
+android {
+    namespace 'com.weather.search'
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 29
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+provideHiltDependencies(this)
+provideComposeDependencies(this)
+
+dependencies {
+
+    // Dependencies
+    implementation project(path: ':data:search')
+    implementation project(path: ':data:search:model')
+    implementation project(path: ':weather-api')
+    implementation project(path: ':core:location')
+    implementation project(path: ':image-utils')
+
+    // Core
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    // Coil
+    implementation "io.coil-kt:coil-compose:2.5.0"
+
+    // Permission
+    implementation 'com.google.accompanist:accompanist-permissions:0.34.0'
+
+    // Compose
+    implementation 'androidx.compose.ui:ui'
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    // Optional - Integration with activities
+    implementation 'androidx.activity:activity-compose:1.8.2'
+    // Optional - Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
+    // Android Studio Preview support
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "io.mockk:mockk:1.13.9"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
